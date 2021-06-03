@@ -52,7 +52,7 @@ export default {
     },
   },
   computed: mapState({
-    autentificado: (state) => state.estaAutentificado,
+    autenticado: (state) => state.estaAutentificado,
   }),
   data: () => ({
     icons: "",
