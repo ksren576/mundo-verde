@@ -2,7 +2,7 @@
 
 ## Descripción del proyecto
 Es un proyecto familiar que consta en la venta de plantas vivas para la decoración del hogar y jardín en general.
-Cuyo próposito es facilitar el conocimiento, cuidado de las especies para sus mantención.Esta destinado a toda persona que deseen agregar espacios verdes y naturalidad al hogar.
+Cuyo próposito es facilitar el conocimiento, cuidado de las especies para su mantención.Esta destinado a toda persona que deseen agregar espacios verdes y naturalidad al hogar.
 
 ## Guía de estilos
 Colors Scheme
@@ -38,7 +38,8 @@ vue create
 firebase init
 vuetify
 
-
+## url 
+https://mundo-verde-71ab3.web.app/
 
 
 ### Project setup

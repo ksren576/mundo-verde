@@ -1,11 +1,15 @@
 <template>
   <v-container>
-    <v-carousel>
-      <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src">
-      </v-carousel-item>
-    </v-carousel>
+    <v-row align="center">
+      <v-col cols="12">
+        <v-carousel class="mt-5">
+          <v-carousel-item v-for="(item, i) in items" :key="i" :src="item.src">
+          </v-carousel-item>
+        </v-carousel>
+      </v-col>
+    </v-row>
 
-    <div>
+    <div class="mt-10">
       <v-row>
         <v-col v-for="n in 8" :key="n">
           <v-card class="mx-auto" max-width="344">

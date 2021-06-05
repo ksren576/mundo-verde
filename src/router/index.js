@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home'
+import ListaDeseos from '../views/ListaDeseos'
+import Login from '../views/Login'
 import Vuex from 'vuex'
 
 
@@ -14,10 +16,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/',
-    name: 'Favoritos',
-
-
+    path: '/lista-deseos',
+    name: 'ListaDeseos',
+    component: ListaDeseos
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   },
   //{
   //path: '/',
