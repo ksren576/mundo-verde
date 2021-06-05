@@ -1,21 +1,19 @@
 <template>
-  <v-footer dark padless>
+  <v-footer padless>
     <v-card class="flex" flat tile>
-      <v-card-title class="teal">
-        <strong class="subheading">Síguenos en nuestras redes sociales</strong>
+      <v-card-title class="green lighten-4">
+        <span class="caption"
+          >{{ new Date().getFullYear() }} — <strong>Mundo verde</strong></span
+        >
 
-        <v-spacer></v-spacer>
+        <v-spacer />
 
-        <v-btn v-for="icon in icons" :key="icon" class="mx-4" dark icon>
+        <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
           <v-icon size="24px">
             {{ icon }}
           </v-icon>
         </v-btn>
       </v-card-title>
-
-      <v-card-text class="py-2 white--text text-center">
-        {{ new Date().getFullYear() }} — <strong>Mundo verde</strong>
-      </v-card-text>
     </v-card>
   </v-footer>
 </template>

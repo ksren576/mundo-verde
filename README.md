@@ -5,33 +5,31 @@ Es un proyecto familiar que consta en la venta de plantas vivas para la decoraci
 Cuyo próposito es facilitar el conocimiento, cuidado de las especies para su mantención.Esta destinado a toda persona que deseen agregar espacios verdes y naturalidad al hogar.
 
 ## Guía de estilos
-Colors Scheme
+### Colors Scheme
 
 white #ffffff
-green #008000
-aqua #00ffff
-teal #008080
-blue #0000ff
 
- Typography
+primary #2E7D32
 
- Typefaces
+secondary #66BB6A
 
- Roboto regular
- Roboto light
+accent #FFCA28
 
- Font Sizes
- h1 50px  xx-large 
- p  18px large
+grey1 #546E7A
 
- ## components
+grey2 #E0E0E0
 
- Buttons
- Size small button 
- states normal state
+### Typography
+Typefaces
 
+Roboto regular
+Roboto light
 
-## Comandos del proyecto
+### Font Sizes
+h1 50px  xx-large 
+p  18px large
+
+## Dependencias
 vue CLI
 firebase CLI
 vue create
@@ -42,6 +40,7 @@ vuetify
 https://mundo-verde-71ab3.web.app/
 
 
+## Comandos del proyecto
 ### Project setup
 ```
 npm install

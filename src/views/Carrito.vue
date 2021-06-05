@@ -1,5 +1,12 @@
 <template>
-  <v-navigation-drawer right v-model="show" absolute temporary :width="width">
+  <v-navigation-drawer
+    right
+    v-model="show"
+    app
+    temporary
+    :width="width"
+    color="grey lighten-5"
+  >
     <v-list-item>
       <v-list-item-icon>
         <v-icon>mdi-cart</v-icon>
@@ -20,14 +27,6 @@
 
     <v-list dense>
       <v-list-item v-for="item in items" :key="item.title">
-        <v-list-item-action class="ma-0">
-          <v-btn icon>
-            <v-icon color="grey lighten-1">mdi-plus-box</v-icon>
-          </v-btn>
-          <v-btn icon>
-            <v-icon color="grey lighten-1">mdi-minus-box</v-icon>
-          </v-btn>
-        </v-list-item-action>
         <v-list-item-content>
           <span>{{ item.quantity }} x {{ item.name }}</span>
           <v-list-item-subtitle
@@ -54,7 +53,9 @@
     <v-divider />
     <v-row class="ma-2">
       <v-col cols="12" lg="6">
-        <v-btn color="blue darken-1" block small rounded dark>Comprar</v-btn>
+        <v-btn color="green darken-3" elevation="0" block small rounded dark
+          >Ir a pagar</v-btn
+        >
       </v-col>
       <v-col cols="12" lg="6"
         ><v-btn color="red" block small rounded outlined
