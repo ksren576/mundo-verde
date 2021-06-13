@@ -23,7 +23,7 @@
       </v-list-item-action>
     </v-list-item>
 
-    <v-divider></v-divider>
+    <v-divider />
 
     <v-list dense>
       <v-list-item v-for="item in items" :key="item.title">
@@ -39,26 +39,32 @@
           {{ (item.quantity * item.price) | toCurrency }}
         </v-list-item-action>
         <v-list-item-action>
-          <v-btn icon>
+          <v-btn icon @click="eliminarProductoDelCarrito(item.id)">
             <v-icon color="red">mdi-trash-can</v-icon>
           </v-btn>
         </v-list-item-action>
       </v-list-item>
     </v-list>
-    <v-divider />
-    <v-list-item>
+    <v-list-item v-if="estaVacio">
+      <v-list-item-content class="justify-center">
+        No hay productos en el carrito
+      </v-list-item-content>
+    </v-list-item>
+
+    <v-divider v-if="!estaVacio" />
+    <v-list-item v-if="!estaVacio">
       <v-list-item-content> Total </v-list-item-content>
       <v-list-item-action>{{ total | toCurrency }}</v-list-item-action>
     </v-list-item>
-    <v-divider />
-    <v-row class="ma-2">
+    <v-divider v-if="!estaVacio" />
+    <v-row class="ma-2" v-if="!estaVacio">
       <v-col cols="12" lg="6">
         <v-btn color="green darken-3" elevation="0" block small rounded dark
           >Ir a pagar</v-btn
         >
       </v-col>
       <v-col cols="12" lg="6"
-        ><v-btn color="red" block small rounded outlined
+        ><v-btn color="red" block small rounded outlined @click="vaciarCarrito"
           >Vaciar carrito</v-btn
         ></v-col
       >
@@ -67,6 +73,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 export default {
   name: "Carrito",
   props: {
@@ -78,17 +85,16 @@ export default {
   data() {
     return {
       show: false,
-      items: [
-        { price: 5990, name: "Ficus", quantity: 2 },
-        { price: 29990, name: "Camelia", quantity: 1 },
-      ],
     };
+  },
+  methods: {
+    ...mapActions(["vaciarCarrito", "eliminarProductoDelCarrito"]),
   },
   computed: {
     width() {
       switch (this.$vuetify.breakpoint.name) {
         case "xs":
-          return "60%";
+          return "100%";
         case "sm":
           return "50%";
         case "md":
@@ -105,6 +111,10 @@ export default {
         0
       );
     },
+    ...mapState({
+      items: (state) => state.carrito,
+      estaVacio: (state) => state.carrito.length === 0,
+    }),
   },
   watch: {
     isShow() {

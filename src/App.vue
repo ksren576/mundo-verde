@@ -13,9 +13,16 @@
 <script>
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
+  methods: {
+    ...mapActions(["cargarDatos"]),
+  },
+  mounted() {
+    this.cargarDatos();
+  },
   components: {
     Footer,
     Navbar,
