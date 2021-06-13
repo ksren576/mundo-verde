@@ -20,16 +20,6 @@
         <v-icon>mdi-account</v-icon>
       </v-btn>
       <v-btn
-        v-if="autenticado"
-        title="Lista de deseos"
-        to="/lista-deseos"
-        small
-        text
-        fab
-      >
-        <v-icon>mdi-star-plus</v-icon>
-      </v-btn>
-      <v-btn
         text
         title="Cerrar sesión"
         v-if="autenticado"
@@ -39,15 +29,27 @@
       >
         <v-icon>mdi-logout</v-icon>
       </v-btn>
-      <v-btn
-        title="Ver carrito"
-        @click="mostrarCarrito = !mostrarCarrito"
-        small
-        text
-        fab
+      <v-badge
+        color="red darken-4"
+        overlap
+        :content="tamanoLista"
+        v-if="autenticado"
       >
-        <v-icon>mdi-cart</v-icon>
-      </v-btn>
+        <v-btn title="Lista de deseos" to="/lista-deseos" small text fab>
+          <v-icon>mdi-heart-multiple</v-icon>
+        </v-btn>
+      </v-badge>
+      <v-badge color="red darken-4" overlap :content="tamanoCarrito">
+        <v-btn
+          title="Ver carrito"
+          @click="mostrarCarrito = !mostrarCarrito"
+          small
+          text
+          fab
+        >
+          <v-icon>mdi-cart</v-icon>
+        </v-btn>
+      </v-badge>
     </v-app-bar>
 
     <Carrito :isShow="mostrarCarrito" />
@@ -70,13 +72,16 @@ export default {
   },
   methods: {
     ...mapActions(["cerrarSesion"]),
-    async logout() {
-      const res = await this.cerrarSesion;
-      if (res) this.$router.push("/login");
+    logout() {
+      this.cerrarSesion();
+      this.$router.push("/");
     },
   },
   computed: mapState({
-    autenticado: (state) => state.estaAutentificado,
+    autenticado: (state) => state.estaAutenticado,
+    tamanoCarrito: (state) =>
+      String(state.carrito.reduce((acc, i) => (acc += i.quantity), 0)),
+    tamanoLista: (state) => String(state.deseos.length),
   }),
 };
 </script>

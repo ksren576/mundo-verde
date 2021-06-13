@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import ListaDeseos from '../views/ListaDeseos'
 import Login from '../views/Login'
+import Categoria from '../views/Categoria'
 import Vuex from 'vuex'
 
 
@@ -24,6 +25,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/categoria/:id',
+    name: 'Categoria',
+    component: Categoria
   },
   //{
   //path: '/',
