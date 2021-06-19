@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getCategories, getProducts } from '../api';
+import { actions } from './actions';
+import { mutations } from './mutations';
 
 Vue.use(Vuex)
 
@@ -32,100 +33,9 @@ export default new Vuex.Store({
     ],
     error: null,
   },
-  mutations: {
-    inicializarProductos(state, productos = []) {
-      state.productos = [...productos];
-    },
-    inicializarCategorias(state, categorias = []) {
-      state.categorias = [...categorias];
-    },
-    setError(state, mensaje) {
-      state.error = mensaje;
-    },
-    agregarAlCarrito(state, producto) {
-      const indice = state.carrito.findIndex((i) => i.id === producto.id);
-
-      if (indice === -1) {
-        state.carrito = [...state.carrito, { ...producto, quantity: 1 }];
-      } else {
-        state.carrito = state.carrito.map((item) => {
-          if (item.id === producto.id) {
-            item.quantity += 1;
-          }
-          return item;
-        })
-      }
-    },
-    eliminarProductoDelCarrito(state, id) {
-      state.carrito = state.carrito.filter((item) => item.id !== id);
-    },
-    vaciarCarrito(state) {
-      state.carrito = [];
-    },
-    iniciarSesion(state, datosUsuario) {
-      state.estaAutenticado = true;
-      state.datosUsuario = { ...datosUsuario };
-    },
-    cerrarSesion(state) {
-      state.estaAutenticado = false;
-      state.datosUsuario = null;
-    },
-    agregarLista(state, producto) {
-      const existe = state.deseos.find((item) => item.id === producto.id);
-      if (!existe) {
-        state.deseos = [
-          ...state.deseos,
-          producto,
-        ];
-      }
-    },
-    eliminarLista(state, id) {
-      state.deseos = state.deseos.filter((item) => item.id !== id);
-    },
-    vaciarLista(state) {
-      state.deseos = [];
-    }
+  getters: {
+    estaAutenticado: (state) => state.estaAutenticado
   },
-  actions: {
-    async cargarDatos(context) {
-      if (context.state.productos.length === 0) {
-        try {
-          const productosResponse = await getProducts();
-          const categoriasResponse = await getCategories();
-
-          context.commit('inicializarProductos', productosResponse.data);
-          context.commit('inicializarCategorias', categoriasResponse.data);
-          return true;
-        } catch (error) {
-          context.commit('setError', error.mensaje);
-          return false;
-        }
-      }
-      return false;
-    },
-    agregarProductoAlCarrito(context, producto) {
-      context.commit("agregarAlCarrito", producto);
-    },
-    eliminarProductoDelCarrito(context, id) {
-      context.commit("eliminarProductoDelCarrito", id);
-    },
-    vaciarCarrito(context) {
-      context.commit("vaciarCarrito");
-    },
-    iniciarSesion(context, datosUsuario) {
-      context.commit("iniciarSesion", datosUsuario);
-    },
-    cerrarSesion(context) {
-      context.commit("cerrarSesion");
-    },
-    agregarLista(context, producto) {
-      context.commit("agregarLista", producto);
-    },
-    eliminarLista(context, id) {
-      context.commit("eliminarLista", id);
-    },
-    vaciarLista(context) {
-      context.commit("vaciarLista");
-    }
-  }
+  mutations,
+  actions
 })
