@@ -1,5 +1,16 @@
 <template>
   <v-container class="mt-3">
+    <v-snackbar
+      :timeout="3000"
+      v-model="alert"
+      absolute
+      bottom
+      color="red darken-2"
+      center
+      text
+    >
+      Nombre de usuario o contraseña incorrectos
+    </v-snackbar>
     <v-row justify="center">
       <v-col cols="12" md="8" lg="6">
         <v-card elevation="2" :loading="loading">
@@ -60,8 +71,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { setTimeoutAsync } from "../helpers";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "Login",
@@ -70,24 +80,37 @@ export default {
       loading: false,
       email: "",
       password: "",
+      alert: false,
     };
   },
   methods: {
     async login() {
       this.loading = true;
-      await setTimeoutAsync(() => {
-        this.iniciarSesion({
-          email: this.email,
-          password: this.password,
-        });
-      }, 3000);
+      const result = await this.iniciarSesion({
+        email: this.email,
+        password: this.password,
+      });
       this.loading = false;
-      this.$router.push("/");
+      if (result.status) {
+        this.$router.push("/");
+      } else {
+        this.alert = true;
+      }
     },
     cancelar() {
       this.$router.go(-1);
     },
     ...mapActions(["iniciarSesion"]),
+  },
+  computed: {
+    ...mapState({
+      estaAutenticado: (state) => state.estaAutenticado,
+    }),
+  },
+  watch: {
+    estaAutenticado() {
+      if (this.estaAutenticado) this.$router.push("/");
+    },
   },
 };
 </script>

@@ -72,9 +72,11 @@ export default {
   },
   methods: {
     ...mapActions(["cerrarSesion"]),
-    logout() {
-      this.cerrarSesion();
-      this.$router.push("/");
+    async logout() {
+      await this.cerrarSesion();
+      if (this.$route.path !== "/") {
+        this.$router.push("/");
+      }
     },
   },
   computed: mapState({
