@@ -23,7 +23,7 @@
         text
         title="Cerrar sesión"
         v-if="autenticado"
-        @click="logout"
+        @click.stop="alertLogout"
         small
         fab
       >
@@ -53,21 +53,32 @@
     </v-app-bar>
 
     <Carrito :isShow="mostrarCarrito" />
+
+    <confirm
+      title="Cerrar sesión"
+      text="¿Está seguro de cerrar la sesión?"
+      :onAccept="handleSave"
+      :onCancel="closeAlert"
+      :show="mostrarAlerta"
+    />
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
-import Carrito from "../views/Carrito";
+import Carrito from "../components/Carrito";
+import Confirm from "../components/Confirm";
 
 export default {
   name: "Navbar",
   components: {
     Carrito,
+    Confirm,
   },
   data() {
     return {
       mostrarCarrito: false,
+      mostrarAlerta: false,
     };
   },
   methods: {
@@ -77,6 +88,16 @@ export default {
       if (this.$route.path !== "/") {
         this.$router.push("/");
       }
+    },
+    alertLogout() {
+      this.mostrarAlerta = true;
+    },
+    handleSave() {
+      this.closeAlert();
+      this.logout();
+    },
+    closeAlert() {
+      this.mostrarAlerta = false;
     },
   },
   computed: mapState({

@@ -12,6 +12,7 @@ export default new Vuex.Store({
     productos: [],
     categorias: [],
     carrito: [],
+    compra: [],
     deseos: [],
     carrusel: [
       {

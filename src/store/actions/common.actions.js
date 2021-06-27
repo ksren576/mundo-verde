@@ -2,7 +2,7 @@ import { getCategories, getProducts, getListaDeseos } from '../../api';
 
 export const commonActions = {
     async cargarDatos(context) {
-        const user = JSON.parse(localStorage.getItem('user') || "");
+        const user = JSON.parse(localStorage.getItem('user') || "null");
         if (user) {
             const documento = await getListaDeseos(user.email);
             if (documento) {
@@ -15,8 +15,8 @@ export const commonActions = {
             try {
                 const productosResponse = await getProducts();
                 const categoriasResponse = await getCategories();
-                context.commit('inicializarProductos', productosResponse.data);
-                context.commit('inicializarCategorias', categoriasResponse.data);
+                context.commit('inicializarProductos', productosResponse);
+                context.commit('inicializarCategorias', categoriasResponse);
                 return true;
             } catch (error) {
                 context.commit('setError', error.mensaje);
