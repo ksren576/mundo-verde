@@ -4,3 +4,7 @@ export const setTimeoutAsync = (callback, timeoutMs) => new Promise((res) => {
         res();
     }, timeoutMs);
 });
+
+export const getRndInteger = (min, max) => (
+    Math.floor(Math.random() * (max - min + 1)) + min
+);

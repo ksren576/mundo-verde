@@ -39,7 +39,11 @@
           {{ (item.quantity * item.price) | toCurrency }}
         </v-list-item-action>
         <v-list-item-action>
-          <v-btn icon @click="eliminarProductoDelCarrito(item.id)">
+          <v-btn
+            icon
+            @click="eliminarProductoDelCarrito(item.id)"
+            :disabled="loading"
+          >
             <v-icon color="red">mdi-trash-can</v-icon>
           </v-btn>
         </v-list-item-action>
@@ -59,22 +63,60 @@
     <v-divider v-if="!estaVacio" />
     <v-row class="ma-2" v-if="!estaVacio">
       <v-col cols="12" lg="6">
-        <v-btn color="green darken-3" elevation="0" block small rounded dark
-          >Ir a pagar</v-btn
+        <v-btn
+          color="primary"
+          elevation="0"
+          block
+          small
+          rounded
+          @click="comprar"
+          :loading="loading"
+          :disabled="loading"
+          >Realizar la compra</v-btn
         >
       </v-col>
       <v-col cols="12" lg="6"
-        ><v-btn color="red" block small rounded outlined @click="vaciarCarrito"
+        ><v-btn
+          color="red"
+          block
+          small
+          rounded
+          outlined
+          @click="alertVaciar"
+          :disabled="loading"
           >Vaciar carrito</v-btn
         ></v-col
       >
     </v-row>
+    <confirm
+      title="Vaciar carrito"
+      text="¿Está seguro de vaciar el carrito?"
+      :show="showAlert"
+      :onAccept="handleAccept"
+      :onCancel="cerrarAlert"
+    />
+    <div>
+      <v-snackbar
+        :timeout="3000"
+        v-model="error"
+        :elevation="5"
+        absolute
+        app
+        top
+        color="red lighten-1"
+        center
+      >
+        {{ errorMessage }}
+      </v-snackbar>
+    </div>
   </v-navigation-drawer>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
+import Confirm from "./Confirm.vue";
 export default {
+  components: { Confirm },
   name: "Carrito",
   props: {
     isShow: {
@@ -85,10 +127,38 @@ export default {
   data() {
     return {
       show: false,
+      showAlert: false,
+      error: false,
+      errorMessage: "",
+      loading: false,
     };
   },
   methods: {
-    ...mapActions(["vaciarCarrito", "eliminarProductoDelCarrito"]),
+    ...mapActions([
+      "vaciarCarrito",
+      "eliminarProductoDelCarrito",
+      "realizarCompra",
+    ]),
+    alertVaciar() {
+      this.showAlert = true;
+    },
+    handleAccept() {
+      this.vaciarCarrito();
+      this.cerrarAlert();
+    },
+    cerrarAlert() {
+      this.showAlert = false;
+    },
+    async comprar() {
+      this.loading = true;
+      const result = await this.realizarCompra();
+      this.loading = false;
+      if (result.status) this.$router.push("/compra");
+      else {
+        this.error = true;
+        this.errorMessage = result.message;
+      }
+    },
   },
   computed: {
     width() {

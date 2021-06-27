@@ -8,9 +8,16 @@
 
         <v-spacer />
 
-        <v-btn v-for="icon in icons" :key="icon" class="mx-4" icon>
+        <v-btn
+          v-for="icon in icons"
+          :key="icon"
+          class="mx-4"
+          icon
+          :href="icon.url"
+          target="_blank"
+        >
           <v-icon size="24px">
-            {{ icon }}
+            {{ icon.icon }}
           </v-icon>
         </v-btn>
       </v-card-title>
@@ -22,7 +29,13 @@
 export default {
   name: "Footer",
   data: () => ({
-    icons: ["mdi-github", "mdi-instagram"],
+    icons: [
+      {
+        icon: "mdi-github",
+        url: "https://github.com/ksren576",
+      },
+      { icon: "mdi-instagram", url: "https://www.instagram.com/blue_soul27/" },
+    ],
   }),
 };
 </script>

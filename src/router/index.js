@@ -6,6 +6,8 @@ import ListaDeseos from '../views/ListaDeseos'
 import Login from '../views/Login'
 import Categoria from '../views/Categoria'
 import store from '../store';
+import Error from '../views/Error';
+import Compra from '../views/Compra';
 
 
 Vue.use(VueRouter)
@@ -32,6 +34,19 @@ const routes = [
     name: 'Categoria',
     component: Categoria
   },
+  {
+    path: '/compra',
+    name: 'Compra',
+    component: Compra
+  },
+  {
+    path: '*',
+    name: 'Error',
+    component: Error,
+    props: {
+      code: '404'
+    }
+  },
   //{
   //path: '/',
   //name: 'About',
@@ -48,6 +63,7 @@ const router = new VueRouter({
   routes
 })
 
+// Router guards
 router.beforeEach((to, from, next) => {
   const estaAutenticado = store.getters.estaAutenticado;
   // Ruta es distinta a la ruta de login y el usuario no esta autenticado

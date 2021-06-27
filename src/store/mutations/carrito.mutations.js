@@ -19,4 +19,8 @@ export const carritoMutations = {
     vaciarCarrito(state) {
         state.carrito = [];
     },
+    realizarCompra(state) {
+        state.compra = [...state.carrito];
+        state.carrito = [];
+    }
 }
