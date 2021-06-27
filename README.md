@@ -58,3 +58,10 @@ npm run build
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Usuarios de prueba
+User: test@mundoverde.cl
+Password: 123456
+
+User: test2@mundoverde.cl
+Password: 123456
